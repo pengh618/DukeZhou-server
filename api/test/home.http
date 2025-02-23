@@ -1,0 +1,3 @@
+# GET https://duke-zhou-server.vercel.app/ HTTP/1.1
+
+POST https://duke-zhou-server.vercel.app/ai/generate?input=rain HTTP/1.1
