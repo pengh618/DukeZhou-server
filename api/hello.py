@@ -4,7 +4,7 @@ import json
 import os
 
 router = APIRouter()
-api_key = os.getenv("API_KEY")
+api_key = os.getenv("OPENAI_API_KEY")
 
 @router.post("/generate_json")
 async def generate_json(input: str):
