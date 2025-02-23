@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.responses import Response
 app = FastAPI()
 
-app.include_router(hello_router, prefix="/hello")
+app.include_router(hello_router, prefix="/ai")
 
 @app.get("/")
 def _root():
