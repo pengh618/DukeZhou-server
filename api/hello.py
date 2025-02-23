@@ -81,5 +81,5 @@ async def generate(input: str):
         parsed_result = json.loads(result)
         return parsed_result
     except Exception as e:
-        return {"异常信息": str(e)}
+        return {"异常": str(e)}
         
