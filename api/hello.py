@@ -49,34 +49,36 @@ async def generate_json(input: str):
 @router.post("/generate")
 async def generate(input: str):
     from openai import OpenAI
-
-    client = OpenAI(api_key=api_key, base_url="https://api.openai.com/v1")
-    json_str = """
-    {
-        "梦境解读结果": "在这里提供梦境的解释和意义",
-        "简介": "在这里简要介绍梦境的背景和情节",
-        "概述": "在这里总结梦境中的主要情节和感受",
-        "关键符号": {
-            "符号1": "解释和意义",
-            "符号2": "解释和意义",
-            "符号3": "解释和意义"
-        },
-        "潜在意义": "在这里探讨梦境中可能隐藏的深层含义和象征意义",
-        "总结": "在这里总结梦境解读的要点和结论"
-    }
-    """
-    new_json_str = (
-        "请解释以下梦的内容:" + input + "，按如下格式组织json字符串:" + json_str
-    )
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "You are a creative AI."},
-            {"role": "user", "content": new_json_str},
-        ],
-        temperature=0.8,
-    )
-    result = response.choices[0].message.content.strip()[7:-3]
-    # Parse the response content as JSON
-    parsed_result = json.loads(result)
-    return parsed_result
+    try:
+        client = OpenAI(api_key=api_key, base_url="https://api.openai.com/v1")
+        json_str = """
+        {
+            "梦境解读结果": "在这里提供梦境的解释和意义",
+            "简介": "在这里简要介绍梦境的背景和情节",
+            "概述": "在这里总结梦境中的主要情节和感受",
+            "关键符号": {
+                "符号1": "解释和意义",
+                "符号2": "解释和意义",
+                "符号3": "解释和意义"
+            },
+            "潜在意义": "在这里探讨梦境中可能隐藏的深层含义和象征意义",
+            "总结": "在这里总结梦境解读的要点和结论"
+        }
+        """
+        new_json_str = (
+            "请解释以下梦的内容:" + input + "，按如下格式组织json字符串:" + json_str
+        )
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "You are a creative AI."},
+                {"role": "user", "content": new_json_str},
+            ],
+            temperature=0.8,
+        )
+        result = response.choices[0].message.content.strip()[7:-3]
+        # Parse the response content as JSON
+        parsed_result = json.loads(result)
+        return parsed_result
+    except Exception as e: 
+        return {"error": e}
