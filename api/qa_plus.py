@@ -8,7 +8,7 @@ import os
 router = APIRouter()
 api_key = os.getenv("OPENAI_API_KEY")
 
-@router.get("/")
+@router.get("/test")
 async def root(request: Request):
     g = event_generator(request)
     return EventSourceResponse(g)
