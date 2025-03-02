@@ -5,7 +5,7 @@ USAGE = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usage</title>
+    <title>Hello</title>
     <style>
         body {
             font-family: Courier New, monospace;
@@ -41,8 +41,7 @@ USAGE = """<!DOCTYPE html>
 <body>
     <div class="container">
         <p> success </p>
-        <h1>Usage</h1>
-        <p>Visit <a href="https://github.com/ultrasev/vercel-python-fastapi" target="_blank">Github doc</a> for more information.</p>
+        <h1>Hello</h1>
     </div>
 </body>
 </html>
