@@ -7,3 +7,4 @@ openai
 httpx
 langchain
 langchain-openai
+sse-starlette
