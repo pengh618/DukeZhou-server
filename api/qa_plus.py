@@ -4,6 +4,7 @@ from sse_starlette.sse import EventSourceResponse
 import asyncio
 from openai import OpenAI
 from httpx import AsyncClient
+import os
 
 router = APIRouter()
 api_key = os.getenv("OPENAI_API_KEY")
