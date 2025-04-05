@@ -6,6 +6,7 @@ from public.usage import USAGE as html
 from fastapi import FastAPI
 from fastapi.responses import Response
 from fastapi.middleware.cors import CORSMiddleware
+from settings.config import settings
 
 app = FastAPI()
 
