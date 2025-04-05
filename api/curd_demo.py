@@ -3,7 +3,7 @@ from core.supabase_db import db
 
 router = APIRouter()
 
-@router.post("/query")
+@router.get("/query")
 async def query():
     try:
         todos = db.from_("todos")\
