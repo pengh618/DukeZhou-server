@@ -8,6 +8,6 @@ class Settings(BaseSettings):
     CORS_ALLOW_METHODS: typing.List = ["*"]
     CORS_ALLOW_HEADERS: typing.List = ["*"]
 
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key: typing.Text = os.getenv("OPENAI_API_KEY")
 
 settings = Settings()
