@@ -4,9 +4,10 @@ from sse_starlette.sse import EventSourceResponse
 import asyncio
 from openai import OpenAI
 import os
+from settings.config import settings
 
 router = APIRouter()
-api_key = os.getenv("OPENAI_API_KEY")
+api_key = settings.api_key
 
 @router.get("/test")
 async def root(request: Request):

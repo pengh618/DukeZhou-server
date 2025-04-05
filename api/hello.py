@@ -2,9 +2,9 @@
 from fastapi.routing import APIRouter
 import json
 import os
+from settings.config import settings
 
 router = APIRouter()
-api_key = os.getenv("OPENAI_API_KEY")
 
 @router.post("/generate_json")
 async def generate_json(input: str):
@@ -15,7 +15,7 @@ async def generate_json(input: str):
     from langchain_openai import ChatOpenAI
 
     client = ChatOpenAI(
-        api_key=api_key,
+        api_key=settings.api_key,
         # base_url="https://api.openai.com/v1",
         model="gpt-4o-mini",
         # stream=True,
