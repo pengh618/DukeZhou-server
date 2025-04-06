@@ -7,12 +7,12 @@ from core.llm import LLM
 
 router = APIRouter()
 api_key = settings.api_key
-
+base_url = 'https://api.openai.com/v1'
 @router.get("/generate")
 async def generate_json(input: str):
     openai_llm = LLM(
         api_key=api_key,
-        base_url=settings.api_base,
+        base_url=base_url,
     )
 
     json_str = """
