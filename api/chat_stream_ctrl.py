@@ -18,7 +18,8 @@ async def generate_json(input: str):
 
     dao = AgentDao()
 
-    agent = dao.get_agent_by_code("dream")
+    pt = await dao.get_prompt_by_code("dream")
+
 
     # json_str = """
     #     {
@@ -39,7 +40,7 @@ async def generate_json(input: str):
     # )
 
     stream =  openai_llm.openai_chat(
-        prompt=agent.propmt,
+        prompt=pt,
         history=[],
     )
 
