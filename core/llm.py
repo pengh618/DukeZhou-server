@@ -1,7 +1,5 @@
-import requests
-import json
+
 import logging
-import random
 from openai import OpenAI
 from prompt.base_prompt import SYSTEM_PROMPT
 
@@ -33,28 +31,13 @@ class LLM:
 
             LOGGER.info(f'  messages:\n\n\n {messages}')
 
-    # stream = client.chat.completions.create(
-    #     model="gpt-4o-mini",
-    #     messages=[{"role": "user", "content": new_json_str}],
-    #     stream=True,
-    # )
-
             stream = client.chat.completions.create(
                 model=self.model,
                 messages=messages,
                 temperature=self.temperature,
                 stream=True,
             )
-
-            # LOGGER.info(f'  response:\n\n\n {completion.model_dump_json()}')
-
-            # if completion.choices and len(completion.choices) > 0:
-            #     return completion.choices[0].message.content
-            # else:
-            #     return f"[OpenAI] Error:{completion.error.message}"
-
-            print(f"  stream: {stream}")
-
+            
             return stream
 
         except Exception as e:
