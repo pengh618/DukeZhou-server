@@ -19,16 +19,16 @@ async def query():
         return {"message": "todos not found"}
     
 
-@router.get("/get_agent_by_code")
-async def get_agent_by_code():
+@router.get("/get_prompt_by_code")
+async def get_prompt_by_code():
     try:
         agent_dao = AgentDao()
         code = "dream"
-        agent = agent_dao.get_agent_by_code(code)
-        if agent:
-            return agent
+        prompt = agent_dao.get_prompt_by_code(code)
+        if prompt:
+            return prompt
         else:   
-            return {"message": "No agent found"}
+            return {"message": "No prompt found"}
     except Exception as e:
         print(f"Error: {e}")
-        return {"message": "agent not found"}
+        return {"message": "prompt not found"}
