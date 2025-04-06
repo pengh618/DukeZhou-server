@@ -1,32 +1,39 @@
 from fastapi.routing import APIRouter
 from fastapi import Request
 from sse_starlette.sse import EventSourceResponse
-import asyncio
 from openai import OpenAI
-import os
 from settings.config import settings
+from core.llm import LLM
+import os
+import asyncio
 
 router = APIRouter()
 api_key = settings.api_key
 
-@router.get("/test")
-async def root(request: Request):
-    g = event_generator(request)
-    return EventSourceResponse(g)
+# @router.get("/test")
+# async def root(request: Request):
+#     g = event_generator(request)
+#     return EventSourceResponse(g)
 
-async def event_generator(request: Request):
-    res_str = "梦境解读结果"
-    for i in res_str:
-        if await request.is_disconnected():
-            print("连接已中断")
-            break
-        yield {"event": "message", "retry": 15000, "data": i}
-        await asyncio.sleep(0.2)
+# async def event_generator(request: Request):
+#     res_str = "梦境解读结果"
+#     for i in res_str:
+#         if await request.is_disconnected():
+#             print("连接已中断")
+#             break
+#         yield {"event": "message", "retry": 15000, "data": i}
+#         await asyncio.sleep(0.2)
 
 
 @router.get("/generate")
 async def generate_json(input: str):
-    client = OpenAI(api_key=api_key, base_url="https://api.openai.com/v1")
+    # client = OpenAI(api_key=api_key, base_url="https://api.openai.com/v1")
+
+    openai_llm = LLM(
+        api_key=api_key,
+        base_url="https://api.openai.com/v1",
+    )
+
     json_str = """
         {
             "梦境解读结果": "在这里提供梦境的解释和意义",
@@ -45,10 +52,15 @@ async def generate_json(input: str):
         "请解释以下梦的内容:" + input + "，按如下格式组织json字符串:" + json_str
     )
 
-    stream = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": new_json_str}],
-        stream=True,
+    # stream = client.chat.completions.create(
+    #     model="gpt-4o-mini",
+    #     messages=[{"role": "user", "content": new_json_str}],
+    #     stream=True,
+    # )
+
+    stream =  openai_llm.openai_chat(
+        prompt=new_json_str,
+        history=[],
     )
 
     return EventSourceResponse(
