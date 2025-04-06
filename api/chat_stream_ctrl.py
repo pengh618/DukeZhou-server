@@ -19,7 +19,7 @@ async def generate_json(input: str):
     dao = AgentDao()
 
     pt = await dao.get_prompt_by_code("dream")
-
+    pt = pt.replace("{{input}}", input)
 
     # json_str = """
     #     {
