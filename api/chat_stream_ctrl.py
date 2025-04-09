@@ -4,36 +4,38 @@ from sse_starlette.sse import EventSourceResponse
 from openai import OpenAI
 from settings.config import settings
 from core.llm import LLM
-from dao.AgentDao import AgentDao
+from dao.AgentDao import AgentDao  # Ensure AgentDao supports async methods
 
 router = APIRouter()
 api_key = settings.api_key
 base_url = 'https://api.openai.com/v1'
 
-async def generate_data(input: str):
-    dao = AgentDao()
-    pt = await dao.get_prompt_by_code("dream")
-    pt = pt.replace("{{input}}", input)
-
-    openai_llm = LLM(
-        api_key=api_key,
-        base_url=base_url,
-    )
-
-    stream =  openai_llm.openai_chat(
-        prompt=pt,
-        history=[],
-    )
-    
-    for chunk in stream:
-        if chunk.choices[0].delta.content is not None:
-            yield chunk.choices[0].delta.content
-    yield "[DONE]"
+openai_llm = LLM(
+    api_key=api_key,
+    base_url=base_url,
+)
 
 @router.get("/generate")
 async def generate_json(input: str):
+
+    async def generate_data(input: str):
+        dao = AgentDao()
+        prompt = await dao.get_prompt_by_code("dream")
+        print(prompt)
+        prompt = prompt.replace("{{input}}", input)
+
+        stream =  openai_llm.openai_chat(
+            prompt=prompt,
+            history=[],
+        )
+
+        for chunk in stream:
+            if chunk.choices[0].delta.content is not None:
+                yield chunk.choices[0].delta.content
+        yield "[DONE]"
+
     return EventSourceResponse(
-        generate_data(str),
+        generate_data(input),
         media_type="text/event-stream",
     )
 

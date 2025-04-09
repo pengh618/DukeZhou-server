@@ -44,7 +44,7 @@ async def generate_json(input: str):
 async def generate(input: str):
     from openai import OpenAI
     try:
-        client = OpenAI(api_key=settings.api_key, base_url=settings.api_base)
+        client = OpenAI(api_key=settings.api_key, base_url=settings.api_url)
         json_str = """
         {
             "梦境解读结果": "在这里提供梦境的解释和意义",
