@@ -67,7 +67,7 @@ async def generate_md(request: Request):
         print(prompt)
         # prompt = prompt.replace("{{input}}", input)
         for key, value in request.query_params.items():        
-            prompt = prompt.replace("{{key}}", value)
+            prompt = prompt.replace(f"{{{{{key}}}}}", value)
             print(f"{key}: {value}")
 
         stream =  deppseek_llm.openai_chat(
