@@ -11,7 +11,7 @@ api_key = settings.api_key
 openrouter_key = settings.openrouter_key
 
 base_url = 'https://api.openai.com/v1'
-openrouter_api_url = 'https://api.openrouter.ai/v1'
+openrouter_api_url = 'https://openrouter.ai/api/v1'
 
 openai_llm = LLM(
     api_key=api_key,

@@ -19,10 +19,11 @@ class LLM:
     def openai_chat(self, prompt, history):
         # 实现与OpenAI的交互
         try:
+            print(self.base_url)
+
             client = OpenAI(
                 api_key= self.api_key,
                 base_url= self.base_url,
-                model= self.model,
             )
 
             messages = self._join_messages(prompt, history)
