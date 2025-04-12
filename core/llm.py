@@ -6,11 +6,12 @@ from prompt.base_prompt import SYSTEM_PROMPT
 LOGGER = logging.getLogger(__name__)
 
 class LLM:
-    def __init__(self, api_key: str, base_url: str = "https://api.openai.com/v1"):
+    def __init__(self, api_key: str, base_url: str = "https://api.openai.com/v1",model: str = "gpt-4o-mini"):
+        
         self.api_key = api_key
         self.base_url = base_url
         self.temperature = 0.5
-        self.model = "gpt-4o-mini"  
+        self.model = model
         self.system_prompt = SYSTEM_PROMPT
         self.client = OpenAI(api_key=api_key, base_url=base_url)
 
@@ -21,6 +22,7 @@ class LLM:
             client = OpenAI(
                 api_key= self.api_key,
                 base_url= self.base_url,
+                model= self.model,
             )
 
             messages = self._join_messages(prompt, history)

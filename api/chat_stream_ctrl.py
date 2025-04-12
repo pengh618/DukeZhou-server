@@ -8,11 +8,20 @@ from dao.AgentDao import AgentDao  # Ensure AgentDao supports async methods
 
 router = APIRouter()
 api_key = settings.api_key
+openrouter_key = settings.openrouter_key
+
 base_url = 'https://api.openai.com/v1'
+openrouter_api_url = 'https://api.openrouter.ai/v1'
 
 openai_llm = LLM(
     api_key=api_key,
     base_url=base_url,
+)
+
+deppseek_llm = LLM( 
+    api_key=openrouter_key,
+    base_url=openrouter_api_url,
+    model="deepseek/deepseek-chat-v3-0324:free"
 )
 
 @router.get("/generate_json")
@@ -48,7 +57,7 @@ async def generate_md(code:str, input: str):
         print(prompt)
         prompt = prompt.replace("{{input}}", input)
 
-        stream =  openai_llm.openai_chat(
+        stream =  deppseek_llm.openai_chat(
             prompt=prompt,
             history=[],
         )
