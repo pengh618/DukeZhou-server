@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from api.chat_stream_ctrl import router as qa_plus_router
+from api.chat_stream_ctrl import router as sse_router
 from api.hello_ctrl import router as hello_router
 from api.curd_demo_ctrl import router as curd_router
 
@@ -13,7 +13,7 @@ app = FastAPI()
 
 
 app.include_router(hello_router, prefix="/ai")
-app.include_router(qa_plus_router, prefix="/qa_plus")
+app.include_router(sse_router, prefix="/sse")
 app.include_router(curd_router, prefix="/curd")
 
 app.add_middleware(
