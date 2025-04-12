@@ -48,14 +48,27 @@ async def generate_json(code:str, input: str):
         media_type="text/event-stream",
     )
 
+@router.get("/items/")
+async def read_items(request: Request):
+    for key, value in request.query_params.items():
+        print(f"{key}: {value}")
+    name = request.query_params.get("code")
+    if name is None:
+        name = "default_name"  # 动态设置默认值
+    return {"name": name}
+
 @router.get("/generate_md")
-async def generate_md(code:str, input: str):
+async def generate_md(request: Request):
+    code = request.query_params.get("code")
 
     async def generate_data(input: str):
         dao = AgentDao()
         prompt = await dao.get_prompt_by_code(code)
         print(prompt)
-        prompt = prompt.replace("{{input}}", input)
+        # prompt = prompt.replace("{{input}}", input)
+        for key, value in request.query_params.items():        
+            prompt = prompt.replace("{{key}}", value)
+            print(f"{key}: {value}")
 
         stream =  deppseek_llm.openai_chat(
             prompt=prompt,
